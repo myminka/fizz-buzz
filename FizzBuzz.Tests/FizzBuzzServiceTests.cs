@@ -117,7 +117,7 @@ namespace FizzBuzz.Tests
             var sequence = fizzBuzzService.GetFizzBuzzSequence();
 
             Assert.AreEqual(100, sequence.Count);
-            //Assert.That(sequence, Is.EquivalentTo(_fizzBuzzSequenceCorrect));
+            Assert.That(sequence, Is.EquivalentTo(_fizzBuzzSequenceCorrect));
         }
     }
 }

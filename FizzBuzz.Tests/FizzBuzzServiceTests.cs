@@ -5,7 +5,8 @@ namespace FizzBuzz.Tests
     [TestFixture]
     public class FizzBuzzServiceTests
     {
-        private readonly List<string> _fizzBuzzSequenceCorrect = new List<string>
+        private FizzBuzzService _fizzBuzzService;
+        private readonly List<string> _fizzBuzzSequenceCorrect = new()
         {
 "1",
 "2",
@@ -109,15 +110,51 @@ namespace FizzBuzz.Tests
 "Buzz"
         };
 
-        [Test]
-        public void Test_FizzBuzzSequence()
+        [SetUp]
+        public void SetUp()
         {
-            var fizzBuzzService = new FizzBuzzService();
+            _fizzBuzzService = new FizzBuzzService();
+        }
 
-            var sequence = fizzBuzzService.GetFizzBuzzSequence();
+        [TestCase(1)]
+        public void TestForRegularItem(int value)
+        {
+            var item = _fizzBuzzService.GetItem(value);
 
-            Assert.AreEqual(100, sequence.Count);
-            //Assert.That(sequence, Is.EquivalentTo(_fizzBuzzSequenceCorrect));
+            Assert.AreEqual(item, value.ToString());
+        }
+
+        [TestCase(3)]
+        public void TestForFizz(int value)
+        {
+            var item = _fizzBuzzService.GetItem(value);
+
+            Assert.AreEqual(item, "Fizz");
+        }
+
+        [TestCase(5)]
+        public void TestForBuzz(int value)
+        {
+            var item = _fizzBuzzService.GetItem(value);
+
+            Assert.AreEqual(item, "Buzz");
+        }
+
+        [TestCase(15)]
+        public void TestForFizzBuzz(int value)
+        {
+            var item = _fizzBuzzService.GetItem(value);
+
+            Assert.AreEqual(item, "FizzBuzz");
+        }
+
+        [Test]
+        public void FizzBuzzSequenceTest()
+        {
+            var sequence = _fizzBuzzService.GetSequence();
+
+            Assert.AreEqual(_fizzBuzzSequenceCorrect.Count, sequence.Count);
+            Assert.That(sequence, Is.EquivalentTo(_fizzBuzzSequenceCorrect));
         }
     }
 }

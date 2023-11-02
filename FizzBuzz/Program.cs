@@ -5,7 +5,7 @@
         static void Main()
         {
             var service = new FizzBuzzService();
-            var result = service.GetResult();
+            var result = service.GetFizzBuzzSequence();
             service.PrintResult(result);
         }
     }

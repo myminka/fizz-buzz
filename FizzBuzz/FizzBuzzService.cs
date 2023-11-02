@@ -2,9 +2,10 @@
 {
     public class FizzBuzzService
     {
-        public List<string> GetResult()
+        public List<string> GetFizzBuzzSequence()
         {
             var result = new List<string>();
+
             for (int i = 1; i <= 100; i++)
             {
                 if (i % 3 == 0 && i % 5 == 0)

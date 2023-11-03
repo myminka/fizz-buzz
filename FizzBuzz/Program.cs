@@ -4,9 +4,9 @@
     {
         static void Main()
         {
-            var service = new FizzBuzzService();
-            var sequence = service.GetSequence();
-            service.PrintSequence(sequence);
+            var fizzBuzzService = new FizzBuzzService(new FizzBuzzGenerator());
+            var sequence = fizzBuzzService.GetSequence(1, 100);
+            fizzBuzzService.PrintSequence(sequence);
         }
     }
 }

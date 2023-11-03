@@ -6,6 +6,7 @@ namespace FizzBuzz.Tests
     public class FizzBuzzServiceTests
     {
         private FizzBuzzService _fizzBuzzService;
+        private FizzBuzzService _customFizzBuzzService;
         private readonly List<string> _fizzBuzzSequenceCorrect = new()
         {
 "1",
@@ -113,48 +114,66 @@ namespace FizzBuzz.Tests
         [SetUp]
         public void SetUp()
         {
+            var parameters = new FizzBuzzParameters()
+            {
+                DivisibleByThree = "Alt+Enter",
+                DivisibleByFive = "You are honey",
+                DivisibleBySeven = "Civilization 5 is the best game of the world!!!"
+            };
+
             _fizzBuzzService = new FizzBuzzService();
+            _customFizzBuzzService = new FizzBuzzService(parameters);
         }
 
         [TestCase(1)]
         public void TestForRegularItem(int value)
         {
-            var item = _fizzBuzzService.GetItem(value);
+            var item = _customFizzBuzzService.GetItem(value);
 
             Assert.AreEqual(item, value.ToString());
         }
 
         [TestCase(3)]
-        public void TestForFizz(int value)
+        public void TestForDivisibleByThree(int value)
         {
-            var item = _fizzBuzzService.GetItem(value);
+            var item = _customFizzBuzzService.GetItem(value);
 
-            Assert.AreEqual(item, "Fizz");
+            Assert.AreEqual(item, _customFizzBuzzService.FizzBuzzParameters.DivisibleByThree);
         }
 
         [TestCase(5)]
-        public void TestForBuzz(int value)
+        public void TestForDivisibleByFive(int value)
         {
-            var item = _fizzBuzzService.GetItem(value);
+            var item = _customFizzBuzzService.GetItem(value);
 
-            Assert.AreEqual(item, "Buzz");
+            Assert.AreEqual(item, _customFizzBuzzService.FizzBuzzParameters.DivisibleByFive);
+        }
+
+        [TestCase(7)]
+        public void TestForDivisibleBySeven(int value)
+        {
+            var item = _customFizzBuzzService.GetItem(value);
+
+            Assert.AreEqual(item, _customFizzBuzzService.FizzBuzzParameters.DivisibleBySeven);
         }
 
         [TestCase(15)]
-        public void TestForFizzBuzz(int value)
+        public void TestForFizzDivisibleByThreeAndFive(int value)
         {
-            var item = _fizzBuzzService.GetItem(value);
+            var item = _customFizzBuzzService.GetItem(value);
 
-            Assert.AreEqual(item, "FizzBuzz");
+            Assert.AreEqual(item, $"{_customFizzBuzzService.FizzBuzzParameters.DivisibleByThree}{_customFizzBuzzService.FizzBuzzParameters.DivisibleByFive}");
         }
 
-        [Test]
-        public void FizzBuzzSequenceTest()
+        [TestCase(210)]
+        public void TestForDivisibleByTwoHundredAndTen(int value)
         {
-            var sequence = _fizzBuzzService.GetSequence();
+            var item = _customFizzBuzzService.GetItem(value);
+            var expectedResult = $"{_customFizzBuzzService.FizzBuzzParameters.DivisibleByThree}" +
+                $"{_customFizzBuzzService.FizzBuzzParameters.DivisibleByFive}" +
+                $"{_customFizzBuzzService.FizzBuzzParameters.DivisibleBySeven}";
 
-            Assert.AreEqual(_fizzBuzzSequenceCorrect.Count, sequence.Count);
-            Assert.That(sequence, Is.EquivalentTo(_fizzBuzzSequenceCorrect));
+            Assert.AreEqual(item, expectedResult);
         }
     }
 }
